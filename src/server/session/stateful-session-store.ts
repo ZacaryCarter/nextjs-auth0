@@ -17,7 +17,7 @@ interface StatefulSessionStoreOptions {
 
   store: SessionDataStore
 
-  cookieOptions?: Partial<Pick<cookies.CookieOptions, "secure">>
+  cookieOptions?: Partial<Pick<cookies.CookieOptions, "secure" | 'cookieName' | 'domain'>>
 }
 
 const generateId = () => {

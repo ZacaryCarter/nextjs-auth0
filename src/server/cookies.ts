@@ -44,6 +44,8 @@ export interface CookieOptions {
   secure: boolean
   path: string
   maxAge?: number
+  cookieName?: string;
+  domain?: string
 }
 
 export type ReadonlyRequestCookies = Omit<
