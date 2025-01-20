@@ -9,7 +9,9 @@ interface StatelessSessionStoreOptions {
   absoluteDuration?: number // defaults to 30 days
   inactivityDuration?: number // defaults to 7 days
 
-  cookieOptions?: Partial<Pick<cookies.CookieOptions, "secure" | 'cookieName' | 'domain'>>
+  cookieOptions?: Partial<
+    Pick<cookies.CookieOptions, "secure" | "cookieName" | "domain" | "sameSite">
+  >
 }
 
 export class StatelessSessionStore extends AbstractSessionStore {

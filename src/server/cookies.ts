@@ -40,11 +40,11 @@ export async function decrypt<T>(cookieValue: string, secret: string) {
 
 export interface CookieOptions {
   httpOnly: boolean
-  sameSite: "lax" | "strict"
+  sameSite: "lax" | "strict" | "none"
   secure: boolean
   path: string
   maxAge?: number
-  cookieName?: string;
+  cookieName?: string
   domain?: string
 }
 

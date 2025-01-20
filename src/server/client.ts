@@ -163,11 +163,12 @@ export class Auth0Client {
       process.env.AUTH0_CLIENT_ASSERTION_SIGNING_ALG
 
     const cookieOptions: Partial<
-      Pick<CookieOptions, "secure" | "domain" | "cookieName">
+      Pick<CookieOptions, "secure" | "domain" | "cookieName" | "sameSite">
     > = {
       secure: false,
       domain: undefined,
       cookieName: undefined,
+      sameSite: "lax",
     }
     if (appBaseUrl) {
       const { protocol } = new URL(appBaseUrl)
@@ -182,6 +183,10 @@ export class Auth0Client {
 
     if (options.session?.cookieOptions?.cookieName) {
       cookieOptions.cookieName = options.session?.cookieOptions?.cookieName
+    }
+
+    if (options.session?.cookieOptions?.sameSite) {
+      cookieOptions.sameSite = options.session.cookieOptions.sameSite
     }
 
     this.transactionStore = new TransactionStore({

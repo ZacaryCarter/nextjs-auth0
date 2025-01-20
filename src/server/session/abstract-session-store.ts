@@ -33,7 +33,9 @@ export interface SessionConfiguration {
    */
   inactivityDuration?: number
 
-  cookieOptions?: Partial<Pick<CookieOptions, "secure" | 'domain' | 'cookieName'>>
+  cookieOptions?: Partial<
+    Pick<CookieOptions, "secure" | "domain" | "cookieName" | "sameSite">
+  >
 }
 
 interface SessionStoreOptions extends SessionConfiguration {
@@ -70,10 +72,10 @@ export abstract class AbstractSessionStore {
     this.inactivityDuration = inactivityDuration
     this.store = store
 
-    this.SESSION_COOKIE_NAME = cookieOptions?.cookieName ?? '__session';
+    this.SESSION_COOKIE_NAME = cookieOptions?.cookieName ?? "__session"
     this.cookieConfig = {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: cookieOptions?.sameSite ?? "lax",
       secure: cookieOptions?.secure ?? false,
       path: "/",
       domain: cookieOptions?.domain ?? undefined,
