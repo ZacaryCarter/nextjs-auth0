@@ -12,7 +12,7 @@ import {
   OnCallbackHook,
   RoutesOptions,
 } from "./auth-client"
-import { RequestCookies, ResponseCookies } from "./cookies"
+import { CookieOptions, RequestCookies, ResponseCookies } from "./cookies"
 import {
   AbstractSessionStore,
   SessionConfiguration,
@@ -162,14 +162,26 @@ export class Auth0Client {
       options.clientAssertionSigningAlg ||
       process.env.AUTH0_CLIENT_ASSERTION_SIGNING_ALG
 
-    const cookieOptions = {
+    const cookieOptions: Partial<
+      Pick<CookieOptions, "secure" | "domain" | "cookieName">
+    > = {
       secure: false,
+      domain: undefined,
+      cookieName: undefined,
     }
     if (appBaseUrl) {
       const { protocol } = new URL(appBaseUrl)
       if (protocol === "https:") {
         cookieOptions.secure = true
       }
+    }
+
+    if (options.session?.cookieOptions?.domain) {
+      cookieOptions.domain = options.session.cookieOptions.domain
+    }
+
+    if (options.session?.cookieOptions?.cookieName) {
+      cookieOptions.cookieName = options.session?.cookieOptions?.cookieName
     }
 
     this.transactionStore = new TransactionStore({
