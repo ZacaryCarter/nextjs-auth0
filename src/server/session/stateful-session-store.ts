@@ -118,7 +118,11 @@ export class StatefulSessionStore extends AbstractSessionStore {
     resCookies: cookies.ResponseCookies
   ) {
     const cookieValue = reqCookies.get(this.SESSION_COOKIE_NAME)?.value
-    await resCookies.delete(this.SESSION_COOKIE_NAME)
+    await resCookies.delete({
+      domain: this.cookieConfig.domain,
+      name: this.SESSION_COOKIE_NAME,
+      sameSite: this.cookieConfig.sameSite,
+    })
 
     if (!cookieValue) {
       return

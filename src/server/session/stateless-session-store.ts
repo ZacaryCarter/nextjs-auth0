@@ -80,6 +80,10 @@ export class StatelessSessionStore extends AbstractSessionStore {
     _reqCookies: cookies.RequestCookies,
     resCookies: cookies.ResponseCookies
   ) {
-    await resCookies.delete(this.SESSION_COOKIE_NAME)
+    await resCookies.delete({
+      domain: this.cookieConfig.domain,
+      name: this.SESSION_COOKIE_NAME,
+      sameSite: this.cookieConfig.sameSite,
+    })
   }
 }
